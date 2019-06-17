@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from project.models import Delivery
 from project import db
-from project.users import get_user
 
 
 blueprint = Blueprint('routes', __name__)
@@ -13,23 +12,21 @@ def index():
 
 
 @blueprint.route('/deliveries')
-@get_user
-def list(user):
-    deliveries = Delivery.query.filter_by(user_id=user.id).all()
+def list():
+    deliveries = Delivery.query.filter_by(user_id=8).all()
 
     return jsonify(
         [delivery_to_dict(delivery) for delivery in deliveries]), 200
 
 
 @blueprint.route('/deliveries', methods=['POST'])
-@get_user
-def create(user):
+def create():
     data = request.get_json()
 
     delivery = Delivery(
         description=data.get('description'),
         status='En Curso',
-        user_id=user.id)
+        user_id=8)
 
     db.session.add(delivery)
     db.session.commit()
