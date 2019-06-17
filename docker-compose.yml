@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  deliveries:
+    container_name: deliveries
+    build: .
+    volumes:
+      - './src:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=manage.py
